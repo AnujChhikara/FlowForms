@@ -1,7 +1,7 @@
 
 # FlowForm
 
-FlowForm is a simple, self-hosted form processing backend built to collect, manage, and securely store form submissions from your website. Easily integrate FlowForm with your site to capture user information, validate submissions, and organize data in one central place.
+FlowForm is a form-processing service that lets you collect, manage, and securely store form submissions. Designed for flexibility, FlowForm can be used as a self-hosted solution or as a convenient, pre-hosted service, making it easy to connect your website forms with a single URL.
 
 ## Features
 
