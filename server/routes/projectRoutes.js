@@ -11,7 +11,7 @@ const projectController = require('../controllers/projectController');
 
 /**
  * @swagger
- * /projects:
+ * /api/projects:
  *   post:
  *     summary: Create a new project
  *     tags: [Projects]
@@ -44,7 +44,7 @@ router.post('/', projectController.createProject);
 
 /**
  * @swagger
- * /projects:
+ * /api/projects:
  *   get:
  *     summary: Get all projects
  *     tags: [Projects]
@@ -78,7 +78,7 @@ router.get('/', projectController.getAllProjects);
 
 /**
  * @swagger
- * /projects/{id}:
+ * /api/projects/{id}:
  *   get:
  *     summary: Get a project by ID
  *     tags: [Projects]
@@ -119,7 +119,7 @@ router.get('/:id', projectController.getProjectById);
 
 /**
  * @swagger
- * /projects/{id}:
+ * /api/projects/{id}:
  *   put:
  *     summary: Update a project by ID
  *     tags: [Projects]
@@ -158,7 +158,7 @@ router.put('/:id', projectController.updateProject);
 
 /**
  * @swagger
- * /projects/{id}:
+ * /api/projects/{id}:
  *   delete:
  *     summary: Delete a project by ID
  *     tags: [Projects]

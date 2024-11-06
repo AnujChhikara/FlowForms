@@ -11,7 +11,7 @@ const formController = require('../controllers/formController');
 
 /**
  * @swagger
- * /forms:
+ * /api/forms:
  *   post:
  *     summary: Create a new form
  *     tags: [Forms]
@@ -46,7 +46,7 @@ router.post('/', formController.createForm);
 
 /**
  * @swagger
- * /forms:
+ * /api/forms:
  *   get:
  *     summary: Get all forms
  *     tags: [Forms]
@@ -88,7 +88,7 @@ router.get('/', formController.getAllForms);
 
 /**
  * @swagger
- * /forms/{id}:
+ * /api/forms/{id}:
  *   get:
  *     summary: Get a form by ID
  *     tags: [Forms]
@@ -136,7 +136,7 @@ router.get('/:id', formController.getFormById);
 
 /**
  * @swagger
- * /forms/{id}:
+ * /api/forms/{id}:
  *   put:
  *     summary: Update a form by ID
  *     tags: [Forms]
@@ -171,7 +171,7 @@ router.put('/:id', formController.updateForm);
 
 /**
  * @swagger
- * /forms/{id}:
+ * /api/forms/{id}:
  *   delete:
  *     summary: Delete a form by ID
  *     tags: [Forms]
