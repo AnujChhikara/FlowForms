@@ -5,7 +5,7 @@ const formRoutes = require('./formRoutes');
 const { swaggerUi, specs } = require('../swagger'); // Import Swagger configuration
 const projectRoutes = require('./projectRoutes');
 
-const { ensureAuthenticated } = require('../middlewear/authMiddlewear');
+const { ensureAuthenticated } = require("../middlewear/authMiddlewear");
 
 module.exports = (app) => {
     // Swagger documentation route

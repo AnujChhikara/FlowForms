@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const { PrismaClient } = require('@prisma/client');
-const flash = require('connect-flash');
+const passport = require("passport");
+const bcrypt = require("bcrypt");
+const { PrismaClient } = require("@prisma/client");
+const flash = require("connect-flash");
 
 const prisma = new PrismaClient();
 
@@ -17,8 +17,12 @@ const prisma = new PrismaClient();
  *       200:
  *         description: Renders the login page
  */
-router.get('/login', (req, res) => {
-    res.render('login', { user: req.user, providers: ['google'], title: 'Login' });
+router.get("/login", (req, res) => {
+  res.render("login", {
+    user: req.user,
+    providers: ["google"],
+    title: "Login",
+  });
 });
 
 /**
@@ -64,27 +68,28 @@ router.get('/login', (req, res) => {
  *       400:
  *         description: Login failed
  */
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
-        if (err) return next(err);
-        if (!user) {
-            return res.status(400).json({ message: info.message || 'Login failed' });
-        }
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    console.log("hit");
+    if (err) return next(err);
+    if (!user) {
+      return res.status(400).json({ message: info.message || "Login failed" });
+    }
 
-        req.logIn(user, (err) => {
-            if (err) return next(err);
+    req.logIn(user, (err) => {
+      if (err) return next(err);
 
-            return res.json({
-                message: 'Login successful',
-                user: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    role: user.role
-                }
-            });
-        });
-    })(req, res, next);
+      return res.json({
+        message: "Login successful",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    });
+  })(req, res, next);
 });
 
 /**
@@ -97,8 +102,12 @@ router.post('/login', (req, res, next) => {
  *       200:
  *         description: Renders the signup page
  */
-router.get('/signup', (req, res) => {
-    res.render('signup', { providers: ['google'], title: 'Signup', user: req.user });
+router.get("/signup", (req, res) => {
+  res.render("signup", {
+    providers: ["google"],
+    title: "Signup",
+    user: req.user,
+  });
 });
 
 /**
@@ -126,33 +135,33 @@ router.get('/signup', (req, res) => {
  *       400:
  *         description: Signup failed due to existing user
  */
-router.post('/signup', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
+router.post("/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-        const existingUser = await prisma.user.findUnique({
-            where: { email }
-        });
-        if (existingUser) {
-            req.flash('error', 'A user with this email already exists.');
-            return res.redirect('/auth/signup');
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        await prisma.user.create({
-            data: {
-                name,
-                email,
-                password: hashedPassword
-            }
-        });
-
-        res.redirect('/auth/login');
-    } catch (error) {
-        console.error('Error during signup:', error);
-        res.redirect('/auth/signup');
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (existingUser) {
+      req.flash("error", "A user with this email already exists.");
+      return res.redirect("/auth/signup");
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    res.redirect("/auth/login");
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.redirect("/auth/signup");
+  }
 });
 
 /**
@@ -165,7 +174,10 @@ router.post('/signup', async (req, res) => {
  *       302:
  *         description: Redirects to Google for authentication
  */
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
 /**
  * @swagger
@@ -179,24 +191,27 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
  *       400:
  *         description: Authentication failed
  */
-router.get('/google/callback', async (req, res, next) => {
-    passport.authenticate('google', async (err, user, info) => {
-        if (err) return next(err);
-        if (!user) return res.redirect('/auth/login');
+router.get("/google/callback", async (req, res, next) => {
+  passport.authenticate("google", async (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect("/auth/login");
 
-        const existingUser = await prisma.user.findUnique({
-            where: { email: user.email }
-        });
-        if (existingUser && !existingUser.googleId) {
-            req.flash('error', 'This email is already associated with another account.');
-            return res.redirect('/auth/login');
-        }
+    const existingUser = await prisma.user.findUnique({
+      where: { email: user.email },
+    });
+    if (existingUser && !existingUser.googleId) {
+      req.flash(
+        "error",
+        "This email is already associated with another account."
+      );
+      return res.redirect("/auth/login");
+    }
 
-        req.login(user, (err) => {
-            if (err) return next(err);
-            res.redirect('/');
-        });
-    })(req, res, next);
+    req.login(user, (err) => {
+      if (err) return next(err);
+      res.redirect("/");
+    });
+  })(req, res, next);
 });
 
 /**
@@ -209,14 +224,14 @@ router.get('/google/callback', async (req, res, next) => {
  *       302:
  *         description: Redirects to login after logout
  */
-router.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash('success_msg', 'You have been logged out.');
-        res.redirect('/auth/login');
-    });
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success_msg", "You have been logged out.");
+    res.redirect("/auth/login");
+  });
 });
 
 /**
@@ -249,18 +264,18 @@ router.get('/logout', (req, res, next) => {
  *                     role:
  *                       type: string
  */
-router.get('/status', (req, res) => {
-    console.log('Session:', req.session);
-    if (req.isAuthenticated()) {
-        res.json({
-            status: 'logged_in',
-            user: req.user
-        });
-    } else {
-        res.json({
-            status: 'not_logged_in'
-        });
-    }
+router.get("/status", (req, res) => {
+  console.log("Session:", req.session);
+  if (req.isAuthenticated()) {
+    res.json({
+      status: "logged_in",
+      user: req.user,
+    });
+  } else {
+    res.json({
+      status: "not_logged_in",
+    });
+  }
 });
 
 module.exports = router;

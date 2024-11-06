@@ -13,20 +13,20 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+console.log(process.env.CLIENT_ORIGIN);
 // CORS options
 const corsOptions = {
-    origin: process.env.CLIENT_ORIGIN || 'http://localhost:8080',
-    credentials: true,
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:8080",
+  credentials: true,
 };
 
 // Middleware for logging requests
 app.use((req, res, next) => {
-    const now = new Date();
-    console.log(`${now.toISOString()} - ${req.method} request for '${req.url}'`);
-    next();
+  const now = new Date();
+  console.log(`${now.toISOString()} - ${req.method} request for '${req.url}'`);
+  next();
 });
 
 // Middleware
@@ -49,21 +49,23 @@ app.use(
 );
 
 // Session middleware configuration
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // Use true for HTTPS
-}));
+    cookie: { secure: false }, // Use true for HTTPS
+  })
+);
 
 // Flash messages
 app.use(flash());
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
+  next();
 });
 
 // Passport middleware (make sure this is after session middleware)
@@ -75,14 +77,16 @@ loadRoutes(app);
 
 // Start server
 async function startServer() {
-    try {
-        app.listen(port, () => {
-            console.log(`Server is running on http://localhost:${port}`);
-            console.log(`Swagger Docs are available at http://localhost:${port}/api-docs`);
-        });
-    } catch (error) {
-        console.error("Database connection failed. Server not started:", error);
-    }
+  try {
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+      console.log(
+        `Swagger Docs are available at http://localhost:${port}/api-docs`
+      );
+    });
+  } catch (error) {
+    console.error("Database connection failed. Server not started:", error);
+  }
 }
 
 startServer();
