@@ -12,23 +12,30 @@ module.exports = (app) => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
     app.use((req, res, next) => {
-        const publicRoutes = ['/auth/login', '/auth/signup', '/auth/google', '/auth/google/callback', '/auth/status'];
+        const publicRoutes = ['/api/auth/login', '/api/auth/signup', '/api/auth/google', '/api/auth/google/callback', '/api/auth/status'];
         if (publicRoutes.includes(req.path)) {
             return next();
         }
         ensureAuthenticated(req, res, next);
     });
-    //form routes
-    app.use('/forms',formRoutes);
-
-    // Authentication routes
-    app.use('/auth', authRoutes);
-
-    // User-related routes
-    app.use('/users', userRoutes);
 
     // Database-related routes
-    app.use('/db', dbRoutes);
+    app.use('/api/db', dbRoutes);
+
+    // Authentication routes
+    app.use('/api/auth', authRoutes);
+
+    // User-related routes
+    app.use('/api/users', userRoutes);
+
+    // Project routes
+    app.use('/api/projects', projectRoutes);
+
+    //form routes
+    app.use('/api/forms',formRoutes);
+
+
+
 
     // Project routes
     app.use('/projects', projectRoutes);

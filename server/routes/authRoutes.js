@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   get:
  *     summary: Render login page with Google as a provider
  *     tags: [Auth]
@@ -23,7 +23,7 @@ router.get('/login', (req, res) => {
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Perform local login
  *     tags: [Auth]
@@ -89,7 +89,7 @@ router.post('/login', (req, res, next) => {
 
 /**
  * @swagger
- * /auth/signup:
+ * /api/auth/signup:
  *   get:
  *     summary: Render signup page with Google as a provider
  *     tags: [Auth]
@@ -103,7 +103,7 @@ router.get('/signup', (req, res) => {
 
 /**
  * @swagger
- * /auth/signup:
+ * /api/auth/signup:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -157,7 +157,7 @@ router.post('/signup', async (req, res) => {
 
 /**
  * @swagger
- * /auth/google:
+ * /api/auth/google:
  *   get:
  *     summary: Initiate Google authentication
  *     tags: [Auth]
@@ -169,7 +169,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 /**
  * @swagger
- * /auth/google/callback:
+ * /api/auth/google/callback:
  *   get:
  *     summary: Handle Google authentication callback
  *     tags: [Auth]
@@ -201,7 +201,7 @@ router.get('/google/callback', async (req, res, next) => {
 
 /**
  * @swagger
- * /auth/logout:
+ * /api/auth/logout:
  *   get:
  *     summary: Log out the current user
  *     tags: [Auth]
@@ -221,7 +221,7 @@ router.get('/logout', (req, res, next) => {
 
 /**
  * @swagger
- * /auth/status:
+ * /api/auth/status:
  *   get:
  *     summary: Check user authentication status
  *     tags: [Auth]
