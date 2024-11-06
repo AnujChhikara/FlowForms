@@ -3,6 +3,11 @@
 
 FlowForm is a form-processing service that lets you collect, manage, and securely store form submissions. Designed for flexibility, FlowForm can be used as a self-hosted solution or as a convenient, pre-hosted service, making it easy to connect your website forms with a single URL.
 
+## Designs and Workflow
+
+- **Designs**: [View on Figma](https://www.figma.com/design/0h7EP6qnrSbjwL1p9IZDI1/FlowForm?m=auto&t=BPyFMOGmc3UA0MrF-1)
+- **Workflow (Simple)**: [View on Miro](https://miro.com/app/board/uXjVLI3IAnI=/?share_link_id=805282326065)
+
 ## Features
 
 - **Easy Integration**: Seamlessly connect forms from your website to FlowForm with minimal setup.
