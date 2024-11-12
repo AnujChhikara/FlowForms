@@ -1,28 +1,35 @@
-import { useState, useEffect } from 'react'
-import axios from "axios";
+import HeroSection from "@/components/blocks/HeroSection";
+import Navbar from "@/components/layout/Navbar";
 
-
-export default function Home() {
-    const [msg, setMsg] = useState(0)
-  
-      const fetchApi = async () => {
-          try {
-              const response = await axios.get("http://localhost:8080/api");
-              console.log(response.data.message);
-              setMsg(response.data.message);
-          } catch (error) {
-              console.error(error);
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+export default function HomePage() {
+  return (
+    <div className="dark min-w-screen min-h-scree ">
+      <Navbar />
+      <HeroSection />
+      <div className="flex flex-col overflow-hidden">
+        <ContainerScroll
+          titleComponent={
+            <>
+              <h1 className="text-4xl font-semibold text-black dark:text-white">
+                Unleash the power of <br />
+                <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
+                  Scroll Animations
+                </span>
+              </h1>
+            </>
           }
-      }
-      useEffect(() => {
-          fetchApi();
-      }, []);
-  
-    return (
-      <>
-          <h1>
-              {msg}
-          </h1>
-      </>
-    )
-  }
+        >
+          <img
+            src={`/linear.webp`}
+            alt="hero"
+            height={720}
+            width={1400}
+            className="mx-auto rounded-2xl object-cover h-full object-left-top"
+            draggable={false}
+          />
+        </ContainerScroll>
+      </div>
+    </div>
+  );
+}
