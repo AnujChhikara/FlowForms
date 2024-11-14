@@ -1,11 +1,13 @@
 import HeroSection from "@/components/blocks/HeroSection";
+import PricingCards from "@/components/blocks/PricingCard";
 import Navbar from "@/components/layout/Navbar";
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 export default function HomePage() {
   return (
-    <div className="dark min-w-screen min-h-scree ">
+    <div className="dark min-w-screen min-h-screen">
       <Navbar />
+
       <HeroSection />
       <div className="flex flex-col overflow-hidden">
         <ContainerScroll
@@ -30,6 +32,7 @@ export default function HomePage() {
           />
         </ContainerScroll>
       </div>
+      <PricingCards />
     </div>
   );
 }
